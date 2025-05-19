@@ -46,24 +46,28 @@ struct ContentView: View {
                     }
                 }
             }.task{
-                if VPNManager.isVpnActive(){
-                    ipAddress = VPNManager.getIPAddress()
-                    viewModel.fetchIPInfo(ipAddress: ipAddress) { info in
-                        model = info
-                        let coordinates = model.loc.components(separatedBy: ",")
-                        if let getLat = Double(coordinates[0]){
-                            lat = getLat
-                        }
-                        if let getLon = Double(coordinates[1]){
-                            lon = getLon
-                        }
-                    }
-                    choice.toggle()
-
-                }
+               loadInformationforIP()
             }
             .navigationTitle("VPN Manager")
             .navigationBarTitleDisplayMode(.inline)
+        }
+        
+    }
+    func loadInformationforIP(){
+        if VPNManager.isVpnActive(){
+            ipAddress = VPNManager.getIPAddress(urlString: "p-us21.urban-vpn.com")
+            viewModel.fetchIPInfo(ipAddress: ipAddress) { info in
+                model = info
+                let coordinates = model.loc.components(separatedBy: ",")
+                if let getLat = Double(coordinates[0]){
+                    lat = getLat
+                }
+                if let getLon = Double(coordinates[1]){
+                    lon = getLon
+                }
+            }
+            choice.toggle()
+
         }
     }
 }

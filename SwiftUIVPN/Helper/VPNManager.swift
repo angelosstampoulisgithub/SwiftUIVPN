@@ -30,8 +30,8 @@ struct VPNManager{
           }
           return false
       }
-      static func getIPAddress() -> String{
-          let host = CFHostCreateWithName(nil,"p-us21.urban-vpn.com" as CFString).takeRetainedValue()
+    static func getIPAddress(urlString:String) -> String{
+          let host = CFHostCreateWithName(nil,urlString as CFString).takeRetainedValue()
           CFHostStartInfoResolution(host, .addresses, nil)
           var success: DarwinBoolean = false
           var getIPAddress:String = "0.0.0"
